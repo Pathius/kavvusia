@@ -1,0 +1,97 @@
+KAVVUSIA – PROMPTY, CZĘŚĆ 2
+===========================
+
+A) ILUSTRACJE (11 sztuk) – ten sam styl co poprzednie
+-----------------------------------------------------
+Generuj w TEJ SAMEJ rozmowie w ChatGPT co poprzednie grafiki (żeby styl się zgadzał).
+Jeśli to nowa rozmowa – najpierw wklej jedną ze starych grafik i napisz:
+"Match this exact illustration style for the next images: black ink outlines, white fills, solid black only for hair and coffee, no color, no gray, transparent background, PNG, square 1:1."
+
+Zapisuj do folderu: grafiki/   (potem daj mi znać – przeskaluję je na stronę)
+
+1) koszyk-pusty.png   (pusty koszyk)
+Same style as before: a person turning an empty coffee bag upside down, only one single coffee bean falls out, funny disappointed face.
+
+2) dziekujemy.png   (podziękowanie za zamówienie)
+Same style as before: a very happy person hugging a parcel box with a coffee bean drawn on it, little hearts and sparkle lines around.
+
+3) w-drodze.png   (śledzenie zamówienia)
+Same style as before: a cheerful courier riding a bicycle with a parcel box in the front basket, motion lines behind the wheels.
+
+4) konto.png   (konto klienta)
+Same style as before: a relaxed person sitting cross-legged with a laptop on their knees and a big mug of coffee next to them, smiling.
+
+5) kontakt.png   (kontakt)
+Same style as before: a person holding a coffee mug in one hand and typing a message on a phone with the other, a small envelope with motion lines flying out of the phone.
+
+6) o-nas.png   (o nas – zespół)
+Same style as before: a group of four friendly young people (two women, two men) standing together in aprons, each holding a coffee mug, smiling, a small coffee roaster in the background.
+
+7) poradnik-hero.png   (poradnik – nagłówek)
+Same style as before: a confused beginner surrounded by floating coffee gadgets (moka pot, V60 dripper, French press, hand grinder, bag of beans), small question marks around the head.
+
+8) poradnik-mlynek.png   (krok: mielenie)
+Same style as before: two hands turning the crank of a manual coffee grinder, a few ground coffee particles falling out.
+
+9) poradnik-waga.png   (krok: ważenie)
+Same style as before: a small digital kitchen scale with a cup on top, a hand pouring coffee beans from a scoop into the cup.
+
+10) poradnik-woda.png   (krok: woda)
+Same style as before: a gooseneck kettle with a small dial thermometer on the lid, steam curls, and a glass water filter jug next to it.
+
+11) 404.png   (strona nie istnieje)
+Same style as before: a tipped-over coffee mug with a black coffee puddle spilling out, the puddle shaped a bit like the number 404, a tiny surprised face on the mug.
+
+
+B) ZDJĘCIA PRODUKTÓW (12 sztuk) – realistyczne, spójne
+------------------------------------------------------
+Najlepiej w NOWEJ rozmowie (żeby nie mieszać ze stylem ilustracji).
+Najpierw wklej PROMPT STYLU, potem po kolei opisy produktów.
+Zapisuj do folderu: produkty/   pod DOKŁADNIE taką nazwą (strona sama je wtedy podepnie).
+
+PROMPT STYLU (wklej raz, z pierwszym produktem):
+"I need a consistent set of e-commerce product photos for a small, playful specialty coffee roastery called Kavvusia.
+STYLE: clean studio product photography, square 1:1, product centered and filling about 65% of the frame, shot straight-on from a slight high angle, soft daylight from the left, soft natural shadow on the floor. Seamless flat solid-color background (exact color given per product). No props unless described, no text, no logos except where described, no watermarks. Modern, minimal, warm and friendly, like Notion meets a Scandinavian coffee brand.
+PACKAGING (for coffee bags): a matte off-white stand-up pouch with a rolled-down top and a small round one-way valve; on the front a simple black-and-white hand-drawn line illustration of a steaming coffee cup (bold black outlines, Notion-style doodle), nothing else printed."
+
+1) produkty/etiopia-yirgacheffe.png
+Coffee bag, background solid butter yellow #F3C86A, a few light-brown roasted coffee beans and one small white jasmine flower lying next to the bag.
+
+2) produkty/kolumbia-huila.png
+Coffee bag, background solid salmon #EC9F80, a few medium-roasted beans and one small red apple slice next to the bag.
+
+3) produkty/brazylia-santos.png
+Coffee bag, background solid sage green #C3CC7B, a few medium-dark beans and two hazelnuts next to the bag.
+
+4) produkty/kenia-nyeri.png
+Coffee bag, background solid lavender #A08FCB, a few light-roasted beans and a small sprig of blackcurrants next to the bag.
+
+5) produkty/gwatemala-antigua.png
+Coffee bag, background solid burnt orange #E2652F, a few medium beans and one cinnamon stick next to the bag.
+
+6) produkty/kavvusia-poranna.png
+Coffee bag, background solid caramel orange #D77B33, a pile of dark, slightly oily roasted beans and one square of dark chocolate next to the bag.
+
+7) produkty/rwanda-nyamasheke.png
+Coffee bag, background solid soft pink #F4B6B0, a few light beans and two raspberries next to the bag.
+
+8) produkty/kolumbia-decaf.png
+Coffee bag, background solid mint #B9D3C2, a few medium beans and one vanilla pod next to the bag.
+
+9) produkty/drip-v60.png
+A white ceramic V60 cone pour-over dripper (size 02) standing on a small white mug, background solid light peach #F9E8DC.
+
+10) produkty/filtry-v60.png
+A neat stack of white paper cone coffee filters for V60, one filter standing open in front, background solid warm white #FFFDF9.
+
+11) produkty/mlynek-reczny.png
+A sleek matte black manual hand coffee grinder with a wooden knob on the crank, standing upright, a few coffee beans at its base, background solid sage green #C3CC7B.
+
+12) produkty/kubek-kavvusia.png
+An orange enamel camping mug (#E2652F) with a black rim and a small cream-colored printed icon of a steaming coffee cup on the front, background solid butter yellow #F3C86A.
+
+
+C) CO SIĘ STANIE PO WRZUCENIU
+-----------------------------
+- Zdjęcia produktów: same pojawią się w sklepie, na karcie produktu i w koszyku (do tej pory są kolorowe zastępniki z nazwą).
+- Ilustracje: puste plamy na stronach (poradnik, konto, kontakt, o nas, koszyk, potwierdzenie, śledzenie, 404) wypełnią się po tym, jak je przeskaluję – napisz „wrzuciłem”.

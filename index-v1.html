@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kavvusia – palarnia kawy (prototyp)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#422212; --espresso-2:#5a311c; --roast:#D77B33; --roast-dark:#b8621f;
+  --cream:#FCF0E1; --latte:#F3E2CB; --paper:#FFF9F2; --ink:#2a160b; --muted:#7b5e4b;
+  --line:#e8d5bd; --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand,.btn,.chip,.price{font-family:'Outfit',sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* pasek demo – wymóg prawny */
+.demo{background:var(--roast);color:#fff;text-align:center;font-size:14px;padding:9px 16px;font-weight:600}
+.demo b{font-family:'Outfit';letter-spacing:.04em}
+
+/* nagłówek */
+header{position:sticky;top:0;z-index:20;background:rgba(252,240,225,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:76px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:26px;color:var(--espresso);letter-spacing:-.02em}
+.brand img{width:44px;height:44px;border-radius:30%}
+.menu{display:flex;gap:26px;font-weight:600;font-size:15px;color:var(--espresso)}
+.menu a{padding:6px 0;border-bottom:2px solid transparent}
+.menu a:hover{border-color:var(--roast)}
+.tools{margin-left:auto;display:flex;align-items:center;gap:12px}
+.search{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:9px 16px;width:260px}
+.search input{border:0;outline:0;background:none;font:inherit;width:100%;color:var(--ink)}
+.icon-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);position:relative;cursor:pointer}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--roast);color:#fff;font:700 11px 'Outfit';border-radius:999px;min-width:19px;height:19px;display:grid;place-items:center;padding:0 5px}
+
+/* hero */
+.hero{padding:64px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:var(--latte);color:var(--espresso);font-weight:700;font-size:13px;padding:7px 14px;border-radius:999px;margin-bottom:22px}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--roast);display:inline-block}
+.hero h1{font-size:clamp(40px,5.4vw,68px);line-height:1.02;letter-spacing:-.035em;color:var(--espresso);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--roast)}
+.hero p.lead{font-size:19px;color:var(--muted);margin:22px 0 32px;max-width:520px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:16px;padding:15px 26px;border-radius:999px;border:0;cursor:pointer;transition:.2s}
+.btn-primary{background:var(--espresso);color:var(--cream)}
+.btn-primary:hover{background:var(--roast)}
+.btn-ghost{background:transparent;color:var(--espresso);box-shadow:inset 0 0 0 2px var(--espresso)}
+.btn-ghost:hover{background:var(--espresso);color:var(--cream)}
+.stats{display:flex;gap:36px;margin-top:40px}
+.stats b{display:block;font:800 28px 'Outfit';color:var(--espresso)}
+.stats span{font-size:14px;color:var(--muted)}
+.hero-art{position:relative;aspect-ratio:1/1;background:var(--latte);border-radius:40px;display:grid;place-items:center}
+.hero-art::before{content:"";position:absolute;inset:0;border-radius:40px;background:radial-gradient(60% 50% at 50% 100%,rgba(215,123,51,.28),transparent)}
+.hero-art img{width:72%;border-radius:30%;position:relative;box-shadow:0 30px 60px -25px rgba(66,34,18,.6)}
+.float{position:absolute;background:var(--paper);border-radius:18px;padding:14px 18px;box-shadow:0 18px 40px -12px rgba(66,34,18,.45);font-size:14px}
+.float b{font-family:'Outfit';display:block;color:var(--espresso);font-size:16px}
+.f1{top:28px;left:-22px}.f2{bottom:36px;right:-18px}
+
+/* sekcje */
+section{padding:56px 0}
+.head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:28px}
+.head h2{font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;color:var(--espresso);line-height:1.1}
+.head p{color:var(--muted);max-width:460px}
+
+/* dobierz kawę (własna wtyczka) */
+.finder{background:var(--espresso);color:var(--cream);border-radius:32px;padding:40px}
+.finder .head h2{color:var(--cream)}
+.finder .head p{color:#d9bfa6}
+.plugin-tag{display:inline-block;font:600 12px 'Outfit';background:rgba(215,123,51,.2);color:#f3b07a;padding:5px 12px;border-radius:999px;margin-bottom:12px;letter-spacing:.03em}
+.filters{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.filters h4{font:600 13px 'Outfit';text-transform:uppercase;letter-spacing:.08em;color:#d9bfa6;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid rgba(252,240,225,.3);background:transparent;color:var(--cream);font-size:14px;font-weight:500;padding:9px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.chip:hover{border-color:var(--roast)}
+.chip.on{background:var(--roast);border-color:var(--roast);color:#fff}
+.finder-foot{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:22px;border-top:1px solid rgba(252,240,225,.15);font-size:15px;color:#d9bfa6}
+.finder-foot b{color:var(--cream);font-family:'Outfit'}
+.reset{background:none;border:0;color:#f3b07a;font:600 14px 'Outfit';cursor:pointer}
+
+/* produkty */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 22px 40px -22px rgba(66,34,18,.45)}
+.pic{aspect-ratio:1/1;display:grid;place-items:center;position:relative}
+.pic svg{width:58%}
+.roast{position:absolute;top:14px;left:14px;font:600 12px 'Outfit';background:rgba(255,255,255,.85);color:var(--espresso);padding:5px 11px;border-radius:999px}
+.body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.origin{font-size:12px;font-weight:700;color:var(--roast);text-transform:uppercase;letter-spacing:.08em}
+.card h3{font-size:19px;color:var(--espresso);letter-spacing:-.01em}
+.notes{font-size:14px;color:var(--muted)}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px}
+.price{font-weight:700;font-size:20px;color:var(--espresso)}
+.price small{font-weight:500;font-size:13px;color:var(--muted)}
+.add{width:42px;height:42px;border-radius:50%;border:0;background:var(--espresso);color:var(--cream);font-size:22px;cursor:pointer;transition:.15s}
+.add:hover{background:var(--roast)}
+.empty{grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);background:var(--paper);border-radius:var(--radius);border:1px dashed var(--line)}
+.empty b{display:block;font:800 40px 'Outfit';color:var(--roast)}
+
+/* kupon */
+.promo{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:var(--latte);border-radius:28px;padding:32px 40px}
+.promo h3{font-size:28px;color:var(--espresso);letter-spacing:-.02em}
+.promo p{color:var(--muted)}
+.code{font:700 22px 'Outfit';letter-spacing:.12em;border:2px dashed var(--roast);color:var(--roast-dark);padding:14px 24px;border-radius:14px;background:var(--paper);cursor:pointer}
+
+/* proces */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.step .n{width:46px;height:46px;border-radius:14px;background:var(--espresso);color:var(--cream);display:grid;place-items:center;font:700 18px 'Outfit';margin-bottom:18px}
+.step h3{color:var(--espresso);font-size:21px;margin-bottom:6px}
+.step p{color:var(--muted);font-size:15px}
+
+/* blog */
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.post{border-radius:var(--radius);overflow:hidden;background:var(--paper);border:1px solid var(--line)}
+.post .cover{height:170px;display:grid;place-items:center;font-size:54px}
+.post div.t{padding:20px}
+.post span{font-size:13px;color:var(--roast);font-weight:700}
+.post h3{color:var(--espresso);font-size:19px;margin-top:4px;line-height:1.25}
+
+/* newsletter + stopka */
+.news{text-align:center;background:var(--espresso);color:var(--cream);border-radius:32px;padding:56px 24px}
+.news h2{font-size:clamp(28px,3vw,38px);letter-spacing:-.02em}
+.news p{color:#d9bfa6;margin:10px 0 26px}
+.news form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.news input{padding:15px 22px;border-radius:999px;border:0;width:320px;font:inherit;background:var(--cream)}
+footer{padding:56px 0 32px;color:var(--muted);font-size:15px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.foot h4{font-family:'Outfit';color:var(--espresso);margin-bottom:12px}
+.foot li{list-style:none;margin:6px 0}
+.legal{margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.legal strong{color:var(--roast-dark)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--espresso);color:var(--cream);padding:14px 22px;border-radius:14px;font-size:15px;transition:.3s;z-index:50;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media (max-width:980px){
+  .menu{display:none}.search{width:180px}
+  .hero-grid{grid-template-columns:1fr}.hero-art{max-width:460px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .filters,.steps,.posts{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr}
+  .f1{left:12px}.f2{right:12px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}.search{display:none}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .promo{grid-template-columns:1fr;padding:26px}
+  .finder{padding:26px}.stats{gap:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="demo">☕ <b>SKLEP DEMONSTRACYJNY</b> – projekt studencki PJATK. Produkty nie są prawdziwe, zamówienia nie są realizowane, płatności nie są pobierane.</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="ikona.png" alt="">Kavvusia</a>
+    <nav class="menu">
+      <a href="#sklep">Sklep</a><a href="#dobierz">Dobierz kawę</a><a href="#palarnia">Palarnia</a><a href="#blog">Poradniki</a><a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="tools">
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7b5e4b" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" placeholder="Szukaj kawy, np. czekolada…">
+      </label>
+      <div class="icon-btn" title="Konto"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#422212" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div>
+      <div class="icon-btn" title="Koszyk"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#422212" stroke-width="2"><path d="M5 7h14l-1.5 12h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span class="badge" id="cart">0</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><i></i>Świeżo palona co tydzień</span>
+      <h1>Kawa palona <em>małymi</em> partiami, prosto do Twojego kubka.</h1>
+      <p class="lead">Ziarna speciality z Etiopii, Kolumbii i Brazylii. Palimy w piątek, wysyłamy w poniedziałek – żeby kawa dotarła do Ciebie w szczycie smaku.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#sklep">Zobacz kawy →</a>
+        <a class="btn btn-ghost" href="#dobierz">Dobierz kawę do siebie</a>
+      </div>
+      <div class="stats">
+        <div><b>12</b><span>kaw z 8 krajów</span></div>
+        <div><b>48 h</b><span>od palenia do wysyłki</span></div>
+        <div><b>4,9★</b><span>średnia ocen</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="ikona.png" alt="Logo Kavvusia">
+      <div class="float f1"><b>Etiopia Yirgacheffe</b>jaśmin · bergamotka</div>
+      <div class="float f2"><b>Ostatnie palenie</b>piątek, 20 listopada</div>
+    </div>
+  </div>
+</section>
+
+<section id="dobierz">
+  <div class="wrap">
+    <div class="finder">
+      <div class="head">
+        <div>
+          <span class="plugin-tag">NASZA WTYCZKA · KAVVUSIA FINDER</span>
+          <h2>Dobierz kawę do siebie</h2>
+        </div>
+        <p>Wybierz, jak parzysz i co lubisz – pokażemy kawy, które będą Ci smakować.</p>
+      </div>
+      <div class="filters">
+        <div><h4>Stopień palenia</h4><div class="chips" data-key="roast">
+          <button class="chip">Jasne</button><button class="chip">Średnie</button><button class="chip">Ciemne</button></div></div>
+        <div><h4>Metoda parzenia</h4><div class="chips" data-key="method">
+          <button class="chip">Przelew</button><button class="chip">Espresso</button><button class="chip">Kawiarka</button><button class="chip">French press</button></div></div>
+        <div><h4>Nuty smakowe</h4><div class="chips" data-key="taste">
+          <button class="chip">Owocowe</button><button class="chip">Czekoladowe</button><button class="chip">Orzechowe</button><button class="chip">Kwiatowe</button></div></div>
+      </div>
+      <div class="finder-foot"><span>Pasujące kawy: <b id="count">8</b></span><button class="reset" id="reset">Wyczyść filtry ✕</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="sklep" style="padding-top:8px">
+  <div class="wrap">
+    <div class="head"><h2>Nasze kawy</h2><p>Ziarnista lub mielona pod Twoją metodę. 250 g, palone na zamówienie.</p></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section style="padding-top:16px">
+  <div class="wrap">
+    <div class="promo">
+      <div><h3>−10% na pierwsze zamówienie</h3><p>Wpisz kod w koszyku. Kod działa na kawy ziarniste i mielone (kupon WooCommerce).</p></div>
+      <div class="code" id="code" title="Kliknij, aby skopiować">KAVVUSIA10</div>
+    </div>
+  </div>
+</section>
+
+<section id="palarnia">
+  <div class="wrap">
+    <div class="head"><h2>Od ziarna do kubka</h2><p>Mała palarnia, krótka droga. Wiemy, skąd pochodzi każde ziarno.</p></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Wybieramy ziarno</h3><p>Kupujemy zielone ziarno speciality od sprawdzonych importerów, z oceną powyżej 84 pkt SCA.</p></div>
+      <div class="step"><div class="n">2</div><h3>Palimy w piątek</h3><p>Małe partie po 5 kg, osobny profil palenia dla każdej kawy – jasno pod przelew, ciemniej pod espresso.</p></div>
+      <div class="step"><div class="n">3</div><h3>Wysyłamy w poniedziałek</h3><p>Pakujemy w torebki z zaworkiem i wysyłamy kurierem lub do paczkomatu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="blog" style="padding-top:8px">
+  <div class="wrap">
+    <div class="head"><h2>Poradniki</h2><p>Jak parzyć, przechowywać i wybierać kawę.</p></div>
+    <div class="posts">
+      <a class="post" href="#"><div class="cover" style="background:#f0d9bd">☕</div><div class="t"><span>Przelew · 5 min</span><h3>V60 krok po kroku: proporcje, mielenie i czas</h3></div></a>
+      <a class="post" href="#"><div class="cover" style="background:#e9c8a6">🫘</div><div class="t"><span>Wiedza · 4 min</span><h3>Jasne czy ciemne palenie? Czym się różnią</h3></div></a>
+      <a class="post" href="#"><div class="cover" style="background:#dcb48e">🫙</div><div class="t"><span>Porady · 3 min</span><h3>Jak przechowywać kawę, żeby nie straciła aromatu</h3></div></a>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap">
+    <div class="news">
+      <h2>Bądź na bieżąco z nowymi paleniami</h2>
+      <p>Raz w tygodniu: nowe kawy, przepisy i kody rabatowe. Bez spamu.</p>
+      <form onsubmit="event.preventDefault();toast('Dziękujemy! (formularz demonstracyjny – nic nie zostało wysłane)')">
+        <input type="email" placeholder="Twój e-mail" required><button class="btn btn-primary" style="background:var(--roast)">Zapisz się</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="brand" href="#" style="font-size:22px"><img src="ikona.png" alt="" style="width:36px;height:36px">Kavvusia</a><p style="margin-top:12px;max-width:300px">Mała palarnia kawy speciality. Palimy z pasją, parzymy z uśmiechem.</p></div>
+      <div><h4>Sklep</h4><ul><li>Kawy ziarniste</li><li>Kawy mielone</li><li>Akcesoria</li><li>Zestawy prezentowe</li></ul></div>
+      <div><h4>Informacje</h4><ul><li>Regulamin</li><li>Polityka prywatności</li><li>Dostawa i zwroty</li><li>FAQ</li></ul></div>
+      <div><h4>Kontakt</h4><ul><li>kontakt@kavvusia.pl</li><li>ul. Przykładowa 1, Warszawa</li><li>pn–pt 9:00–17:00</li></ul></div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Kavvusia · projekt zaliczeniowy „Zarządzanie Treścią (CMS)”, PJATK</span>
+      <span><strong>Sklep demonstracyjny</strong> – nie prowadzimy sprzedaży, dane kontaktowe są fikcyjne.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const P=[
+ {n:'Etiopia Yirgacheffe',o:'Etiopia',roast:'Jasne',method:['Przelew','French press'],taste:['Kwiatowe','Owocowe'],notes:'jaśmin, bergamotka, cytrus',p:54,c:'#f3c98f'},
+ {n:'Kolumbia Huila',o:'Kolumbia',roast:'Średnie',method:['Przelew','Espresso'],taste:['Owocowe','Czekoladowe'],notes:'karmel, czerwone jabłko',p:49,c:'#e8a86a'},
+ {n:'Brazylia Santos',o:'Brazylia',roast:'Średnie',method:['Espresso','Kawiarka'],taste:['Orzechowe','Czekoladowe'],notes:'orzech laskowy, mleczna czekolada',p:42,c:'#d9925a'},
+ {n:'Kenia AA Nyeri',o:'Kenia',roast:'Jasne',method:['Przelew'],taste:['Owocowe'],notes:'czarna porzeczka, grejpfrut',p:59,c:'#e7b3a0'},
+ {n:'Gwatemala Antigua',o:'Gwatemala',roast:'Średnie',method:['Kawiarka','French press','Espresso'],taste:['Czekoladowe'],notes:'kakao, cynamon, brązowy cukier',p:47,c:'#c98b5e'},
+ {n:'Kavvusia Espresso Blend',o:'Blend',roast:'Ciemne',method:['Espresso','Kawiarka'],taste:['Czekoladowe','Orzechowe'],notes:'gorzka czekolada, karmel',p:44,c:'#8e5634'},
+ {n:'Sumatra Mandheling',o:'Indonezja',roast:'Ciemne',method:['French press','Kawiarka'],taste:['Orzechowe'],notes:'cedr, ziemiste, przyprawy',p:51,c:'#7a4a2e'},
+ {n:'Rwanda Nyamasheke',o:'Rwanda',roast:'Jasne',method:['Przelew','French press'],taste:['Kwiatowe','Owocowe'],notes:'hibiskus, czerwone owoce',p:56,c:'#efb9a4'}
+];
+const bag=c=>`<svg viewBox="0 0 120 150"><path d="M22 20h76l8 120H14z" fill="#FFF9F2" stroke="#422212" stroke-width="3" stroke-linejoin="round"/><path d="M22 20l6-12h64l6 12" fill="${c}" stroke="#422212" stroke-width="3" stroke-linejoin="round"/><rect x="34" y="56" width="52" height="52" rx="12" fill="#422212"/><path d="M53 66c-4 5 4 7 0 13M64 66c-4 5 4 7 0 13" stroke="#D77B33" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M45 84h30v4a15 15 0 0 1-30 0z" fill="#FCF0E1"/><rect x="34" y="118" width="52" height="5" rx="2.5" fill="${c}"/></svg>`;
+const sel={roast:new Set(),method:new Set(),taste:new Set()};
+const grid=document.getElementById('grid'),q=document.getElementById('q');
+function render(){
+  const s=q.value.trim().toLowerCase();
+  const list=P.filter(x=>
+    (!sel.roast.size||sel.roast.has(x.roast))&&
+    (!sel.method.size||x.method.some(m=>sel.method.has(m)))&&
+    (!sel.taste.size||x.taste.some(t=>sel.taste.has(t)))&&
+    (!s||(x.n+' '+x.notes+' '+x.o+' '+x.taste.join(' ')).toLowerCase().includes(s)));
+  document.getElementById('count').textContent=list.length;
+  grid.innerHTML=list.length?list.map(x=>`
+    <article class="card"><div class="pic" style="background:${x.c}33">${bag(x.c)}<span class="roast">${x.roast} palenie</span></div>
+    <div class="body"><span class="origin">${x.o}</span><h3>${x.n}</h3><p class="notes">${x.notes}</p>
+    <div class="row"><span class="price">${x.p} zł <small>/ 250 g</small></span><button class="add" title="Dodaj do koszyka">+</button></div></div></article>`).join('')
+    :`<div class="empty"><b>404</b>Nie znaleźliśmy takiej kawy – zmień filtry lub wyszukiwanie.</div>`;
+}
+document.querySelectorAll('.chips').forEach(g=>g.addEventListener('click',e=>{
+  const b=e.target.closest('.chip');if(!b)return;const k=g.dataset.key,v=b.textContent;
+  b.classList.toggle('on');sel[k].has(v)?sel[k].delete(v):sel[k].add(v);render();
+}));
+document.getElementById('reset').onclick=()=>{Object.values(sel).forEach(x=>x.clear());document.querySelectorAll('.chip.on').forEach(c=>c.classList.remove('on'));q.value='';render()};
+q.addEventListener('input',()=>{render();});
+q.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('sklep').scrollIntoView({behavior:'smooth'})});
+let n=0;grid.addEventListener('click',e=>{if(e.target.closest('.add')){document.getElementById('cart').textContent=++n;toast('Dodano do koszyka – pamiętaj, to sklep demonstracyjny ☕')}});
+document.getElementById('code').onclick=()=>{navigator.clipboard?.writeText('KAVVUSIA10');toast('Skopiowano kod KAVVUSIA10')};
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2600)}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kavvusia – palarnia kawy</title>
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'DSEG7';src:url(https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Bold.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'DSEG14';src:url(https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG14-Classic/DSEG14Classic-Bold.woff2) format('woff2');font-display:swap}
+:root{
+  --roast:#D77B33;        /* pomarańcz z logo – pole */
+  --roast-deep:#A4511A;
+  --espresso:#422212;     /* obudowa, tekst */
+  --espresso-2:#5C3420;
+  --ink:#24130A;
+  --lcd:#C9D3B4;          /* szałwiowy wyświetlacz */
+  --lcd-ink:#1E2417;
+  --lcd-ghost:rgba(30,36,23,.09);
+  --paper:#FBF6EF;        /* karta przepisu */
+  --counter:#F1E7DA;      /* blat */
+  --line:#E1D2BF;
+  --muted:#6E4F3C;
+  --r:18px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scrollbar-color:var(--espresso) var(--counter)}
+html,body{overflow-x:clip}
+body{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-optical-sizing:auto;background:var(--counter);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+::selection{background:var(--roast);color:var(--ink)}
+input{caret-color:var(--roast-deep)}
+:focus-visible{outline:2.5px solid var(--espresso);outline-offset:3px;border-radius:8px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+svg{display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.lcdtxt{font-family:'DSEG7',monospace;font-weight:700;letter-spacing:.02em}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ───────── pasek: sklep demonstracyjny ───────── */
+.demo{background:var(--espresso);color:#F6E3CF;font-size:14px;font-weight:500}
+.demo .wrap{display:flex;gap:14px;align-items:center;justify-content:center;padding-top:9px;padding-bottom:9px;text-align:center}
+.demo b{background:var(--roast);color:var(--ink);font-weight:800;font-size:12px;letter-spacing:.08em;padding:3px 9px;border-radius:5px;white-space:nowrap}
+
+/* ───────── nagłówek ───────── */
+header{background:var(--roast);position:sticky;top:0;z-index:30;transition:box-shadow .3s}
+header.scrolled{box-shadow:0 10px 30px -18px rgba(36,19,10,.55)}
+.nav{display:flex;align-items:center;gap:34px;height:78px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:27px;letter-spacing:-.035em;color:var(--ink)}
+.brand img{width:42px;height:42px;border-radius:30%;box-shadow:0 4px 10px -4px rgba(36,19,10,.5)}
+.menu{display:flex;gap:26px;font-weight:600;font-size:16px}
+.menu a{position:relative;padding:4px 0}
+.menu a::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--ink);transition:right .35s var(--ease)}
+.menu a:hover::after{right:0}
+.tools{margin-left:auto;display:flex;gap:10px;align-items:center}
+.hsearch{display:flex;align-items:center;gap:9px;background:rgba(255,246,234,.9);border-radius:999px;padding:0 16px;height:44px;width:270px;transition:background .2s}
+.hsearch:focus-within{background:#fff}
+.hsearch input{border:0;background:none;outline:0;font:inherit;font-size:15px;width:100%;color:var(--ink)}
+.hsearch input::placeholder{color:#8a6a55}
+.ibtn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#F6E3CF;position:relative;transition:transform .2s var(--ease)}
+.ibtn:hover{transform:translateY(-2px)}
+.cartn{position:absolute;top:-5px;right:-5px;background:var(--paper);color:var(--ink);font-size:11px;font-weight:800;min-width:20px;height:20px;border-radius:99px;display:grid;place-items:center;padding:0 5px;box-shadow:0 0 0 2px var(--roast)}
+
+/* ───────── hero = waga ───────── */
+.hero{background:var(--roast);padding:34px 0 0;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:56px;align-items:center}
+.hero h1{font-size:clamp(52px,7.2vw,104px);line-height:.9;letter-spacing:-.045em;font-weight:800;color:var(--ink);text-wrap:balance}
+.hero h1 span{display:block;color:var(--paper)}
+.hero .lead{font-size:20px;line-height:1.45;max-width:30ch;margin:26px 0 30px;color:var(--ink);font-weight:500}
+.cta{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:#F6E3CF;font-weight:700;font-size:17px;padding:17px 26px 17px 28px;border-radius:999px;transition:transform .25s var(--ease),box-shadow .25s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 26px -14px rgba(36,19,10,.7)}
+.cta svg{transition:transform .3s var(--ease)}
+.cta:hover svg{transform:translateX(4px)}
+.textlink{font-weight:700;margin-left:22px;border-bottom:2px solid var(--ink);padding-bottom:2px}
+
+/* obiekt: waga */
+.scale-wrap{position:relative;padding-bottom:0}
+.scale{background:linear-gradient(180deg,#4d2817 0%,var(--espresso) 40%,#381c0e 100%);border-radius:34px 34px 0 0;padding:26px 26px 28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 -2px 0 rgba(0,0,0,.08),0 40px 60px -30px rgba(36,19,10,.7);position:relative}
+.scale::before{content:"";position:absolute;left:50%;top:-14px;transform:translateX(-50%);width:70%;height:14px;background:#2d170b;border-radius:12px 12px 0 0;box-shadow:inset 0 2px 0 rgba(255,255,255,.08)}
+.scale-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;color:#C9A98F;font-size:13px;font-weight:600;letter-spacing:.06em}
+.scale-top img{width:26px;height:26px;border-radius:30%;opacity:.95}
+.scale-top .model{display:flex;align-items:center;gap:9px}
+.lcd{background:linear-gradient(180deg,#d3dcbf,var(--lcd) 60%,#bcc7a5);border-radius:14px;padding:20px 24px 18px;color:var(--lcd-ink);box-shadow:inset 0 3px 8px rgba(30,36,23,.35),inset 0 -1px 0 rgba(255,255,255,.4);position:relative;overflow:hidden}
+.lcd::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(30,36,23,.025) 0 1px,transparent 1px 3px);pointer-events:none}
+.lcd-step{font-family:'DSEG14',monospace;font-size:15px;letter-spacing:.06em;display:flex;justify-content:space-between;min-height:20px}
+.lcd-step .dim{opacity:.45}
+.lcd-main{display:flex;align-items:flex-end;justify-content:flex-end;gap:10px;margin:8px 0 6px;position:relative}
+.lcd-main .num{position:relative;font-size:clamp(64px,8.6vw,124px);line-height:1}
+.lcd-main .ghost{position:absolute;right:0;top:0;color:var(--lcd-ghost)}
+.lcd-main .val{position:relative}
+.lcd-main .unit{font-weight:800;font-size:34px;line-height:1;padding-bottom:10px}
+.lcd-row{display:grid;grid-template-columns:repeat(3,1fr);border-top:1.5px solid rgba(30,36,23,.25);padding-top:12px;gap:8px}
+.lcd-row div{display:flex;flex-direction:column;gap:3px}
+.lcd-row small{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.lcd-row .lcdtxt{font-size:26px;position:relative}
+.lcd-row .lcdtxt i{position:absolute;inset:0;color:var(--lcd-ghost);font-style:normal}
+
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+.key{background:linear-gradient(180deg,#5e3823,#4a2a19);color:#F1DCC6;border-radius:14px;padding:13px 8px 11px;display:flex;flex-direction:column;align-items:center;gap:7px;font-weight:600;font-size:14px;box-shadow:0 4px 0 #24130a,inset 0 1px 0 rgba(255,255,255,.12);transition:transform .12s,box-shadow .12s,background .25s,color .25s}
+.key svg{width:30px;height:30px}
+.key:hover{background:linear-gradient(180deg,#6b412a,#53301d)}
+.key:active{transform:translateY(3px);box-shadow:0 1px 0 #24130a,inset 0 1px 0 rgba(255,255,255,.1)}
+.key[aria-pressed="true"]{background:linear-gradient(180deg,#e58d47,var(--roast));color:var(--ink);transform:translateY(3px);box-shadow:0 1px 0 #24130a,inset 0 2px 4px rgba(36,19,10,.25)}
+.ctrl{display:flex;gap:10px;margin-top:14px}
+.ctrl button{flex:1;border-radius:12px;padding:11px;font-weight:700;font-size:14px;letter-spacing:.06em;color:#E2C9B1;border:1.5px solid rgba(241,220,198,.22);transition:background .2s,color .2s,border-color .2s}
+.ctrl button:hover{border-color:var(--roast);color:#fff}
+.ctrl .start{background:rgba(215,123,51,.16);color:#F6B07A;border-color:rgba(215,123,51,.5)}
+.ctrl .start.running{background:var(--roast);color:var(--ink)}
+
+/* polecane pod metodę – na „blacie” */
+.picks{background:var(--counter);padding:30px 0 70px;position:relative}
+.picks::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:linear-gradient(180deg,rgba(36,19,10,.18),transparent)}
+.picks-head{flex-wrap:wrap;display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:22px}
+.picks-head h2{font-size:28px;letter-spacing:-.03em;font-weight:700}
+.picks-head h2 em{font-style:normal;color:var(--roast-deep)}
+.picks-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;transition:opacity .25s}
+
+/* ───────── karta kawy ───────── */
+.card{background:var(--paper);border-radius:var(--r);display:grid;grid-template-columns:118px 1fr;gap:18px;padding:16px 18px 16px 16px;box-shadow:0 1px 0 rgba(36,19,10,.06),0 12px 24px -20px rgba(36,19,10,.5);transition:transform .45s var(--ease),box-shadow .45s var(--ease),opacity .4s}
+.card:hover{transform:translateY(-4px);box-shadow:0 1px 0 rgba(36,19,10,.06),0 26px 40px -24px rgba(36,19,10,.55)}
+.card .bag{border-radius:12px;display:grid;place-items:center;padding:10px 6px;position:relative;align-self:stretch}
+.card .bag svg{width:100%;max-width:96px;height:auto}
+.badge{white-space:nowrap;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;position:absolute;top:8px;left:8px;font-size:11px;font-weight:800;letter-spacing:.04em;background:var(--ink);color:#F6E3CF;padding:3px 8px;border-radius:6px}
+.card .meta{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--roast-deep)}
+.card h3{font-size:21px;line-height:1.12;letter-spacing:-.025em;font-weight:700;margin:3px 0 6px}
+.card .notes{font-size:15px;font-weight:500;color:var(--espresso-2)}
+.card .notes span+span::before{content:" / ";color:#c4a68c}
+.meters{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;margin:13px 0 14px;align-items:center}
+.meters dt{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.meters dd{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.meters dd i{height:8px;border-radius:2px;background:#eadccb}
+.meters dd i.on{background:var(--espresso)}
+.meters dd.roastm i.on{background:var(--roast)}
+.buy{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+.price{font-weight:800;font-size:22px;letter-spacing:-.02em;white-space:nowrap}
+.price small{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0}
+.add{white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#F6E3CF;font-weight:700;font-size:14px;padding:10px 15px 10px 12px;border-radius:999px;transition:background .2s,transform .2s var(--ease)}
+.add:hover{background:var(--roast);color:var(--ink)}
+.add.done{background:#3f6b3a;color:#fff}
+.card .info{display:flex;flex-direction:column;min-width:0}
+
+/* ───────── sklep + Dobierz kawę ───────── */
+.shop{padding:96px 0 90px}
+.sec-h{font-size:clamp(40px,5vw,68px);line-height:.95;letter-spacing:-.045em;font-weight:800;text-wrap:balance}
+.sec-p{font-size:18px;color:var(--muted);max-width:44ch;margin-top:14px}
+.shop-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:34px}
+.finder{background:var(--espresso);color:#F1DCC6;border-radius:26px;padding:24px 26px;display:grid;grid-template-columns:1.25fr 1fr 1.3fr;gap:26px;margin-bottom:26px}
+.finder h3{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C9A98F;margin-bottom:12px}
+.seg{display:flex;flex-wrap:wrap;gap:7px}
+.seg button{border:1.5px solid rgba(241,220,198,.25);border-radius:999px;padding:8px 14px;font-size:14.5px;font-weight:600;color:#F1DCC6;transition:background .2s,border-color .2s,color .2s}
+.seg button:hover{border-color:var(--roast)}
+.seg button[aria-pressed="true"]{background:var(--roast);border-color:var(--roast);color:var(--ink)}
+.finder-bar{grid-column:1/-1;display:flex;align-items:center;gap:16px;border-top:1px solid rgba(241,220,198,.15);padding-top:18px}
+.fsearch{flex:1;display:flex;align-items:center;gap:10px;background:rgba(241,220,198,.1);border-radius:12px;padding:0 14px;height:46px}
+.fsearch input{flex:1;background:none;border:0;outline:0;font:inherit;font-size:16px;color:#fff}
+.fsearch input::placeholder{color:#b8977d}
+.count{font-size:15px;white-space:nowrap}
+.count b{font-family:'DSEG7';font-size:22px;color:var(--lcd);margin-right:4px}
+.clear{color:#F6B07A;font-weight:700;font-size:14px;white-space:nowrap}
+.plug{font-size:12.5px;color:#b8977d;grid-column:1/-1;margin-top:-6px}
+.plug strong{color:#F6B07A;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.empty{grid-column:1/-1;background:var(--paper);border-radius:var(--r);padding:44px;text-align:center;border:2px dashed var(--line)}
+.empty .lcdtxt{font-size:64px;color:var(--roast-deep);display:block;margin-bottom:8px}
+.empty p{font-size:18px;color:var(--muted)}
+.empty button{margin-top:16px;font-weight:700;border-bottom:2px solid var(--ink)}
+
+/* ───────── kupon = paragon z wagi ───────── */
+.promo{padding:0 0 100px}
+.promo-in{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;background:var(--roast);border-radius:30px;padding:48px 56px;overflow:hidden;position:relative}
+.promo h2{font-size:clamp(36px,4.4vw,58px);line-height:.95;letter-spacing:-.04em;font-weight:800}
+.promo p{font-size:18px;max-width:40ch;margin-top:14px;font-weight:500}
+.receipt{width:300px;background:#FFFDF8;color:var(--ink);padding:24px 24px 30px;font-size:14px;transform:rotate(2.5deg);box-shadow:0 30px 40px -24px rgba(36,19,10,.6);position:relative;-webkit-mask:radial-gradient(8px 6px at 50% 100%,#0000 98%,#000) 0 0/16px 100% repeat-x;mask:radial-gradient(8px 6px at 50% 100%,#0000 98%,#000) 0 0/16px 100% repeat-x;padding-bottom:36px}
+.receipt .r-h{text-align:center;font-weight:800;font-size:16px;letter-spacing:.04em}
+.receipt .r-s{text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px}
+.receipt .dash{border-top:1.5px dashed #cbb7a2;margin:12px 0}
+.receipt .rl{display:flex;justify-content:space-between}
+.receipt .code{display:block;width:100%;text-align:center;font-family:'DSEG14';font-size:24px;letter-spacing:.05em;padding:12px 0;margin:4px 0;border-radius:8px;background:var(--lcd);color:var(--lcd-ink);transition:transform .2s var(--ease)}
+.receipt .code:hover{transform:scale(1.03)}
+.receipt .tiny{font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.35}
+
+/* ───────── dziennik palenia ───────── */
+.log{background:var(--espresso);color:#F1DCC6;padding:100px 0}
+.log .sec-h{color:var(--paper)}
+.log .sec-p{color:#C9A98F}
+.log-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:40px}
+.batch{font-size:15px;text-align:right;color:#C9A98F;line-height:1.6}
+.batch b{color:var(--paper);font-weight:700}
+.curve{background:#2f170a;border-radius:24px;padding:26px 26px 18px;position:relative}
+.curve svg{width:100%;height:auto;overflow:visible}
+.curve .path{stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 2.6s var(--ease)}
+.curve.in .path{stroke-dashoffset:0}
+.curve .mk{opacity:0;transition:opacity .5s}
+.curve.in .mk{opacity:1}
+.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:26px;border-top:1px solid rgba(241,220,198,.15)}
+.stage{padding:20px 18px 0 0}
+.stage .t{font-family:'DSEG7';font-size:20px;color:var(--roast)}
+.stage h4{font-size:18px;color:var(--paper);margin:8px 0 4px;letter-spacing:-.01em}
+.stage p{font-size:14.5px;color:#C9A98F;line-height:1.45}
+
+/* ───────── poradniki = karty przepisu ───────── */
+.recipes{padding:100px 0}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.rec{background:var(--paper);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .45s var(--ease),box-shadow .45s var(--ease);box-shadow:0 12px 24px -20px rgba(36,19,10,.5)}
+.rec:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 30px 40px -26px rgba(36,19,10,.55)}
+.rec .read{display:grid;grid-template-columns:repeat(3,1fr);background:var(--lcd);color:var(--lcd-ink);padding:16px 20px;gap:6px}
+.rec .read small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.65}
+.rec .read .lcdtxt{font-size:22px}
+.rec .body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.rec .kind{font-size:13px;font-weight:700;color:var(--roast-deep)}
+.rec h3{font-size:23px;line-height:1.15;letter-spacing:-.025em}
+.rec p{color:var(--muted);font-size:15.5px}
+.rec .more{margin-top:auto;font-weight:700;display:inline-flex;gap:8px;align-items:center}
+
+/* ───────── newsletter + stopka ───────── */
+.news{padding:0 0 100px}
+.news-in{background:var(--ink);color:#F1DCC6;border-radius:30px;padding:56px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.news h2{font-size:clamp(32px,3.6vw,48px);line-height:1;letter-spacing:-.04em;color:var(--paper)}
+.news p{color:#C9A98F;margin-top:12px;font-size:17px}
+.news form{display:flex;gap:10px}
+.news input{flex:1;height:56px;border-radius:999px;border:0;padding:0 22px;font:inherit;font-size:16px;background:#FBF6EF;color:var(--ink)}
+.news button{height:56px;padding:0 26px;border-radius:999px;background:var(--roast);color:var(--ink);font-weight:800;font-size:16px;transition:transform .2s var(--ease)}
+.news button:hover{transform:translateY(-2px)}
+.news .fine{font-size:13px;color:#9c7c64;margin-top:12px}
+footer{background:var(--roast);padding:70px 0 34px;color:var(--ink)}
+.foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px}
+.foot h4{font-size:15px;font-weight:800;margin-bottom:12px}
+.foot li{list-style:none;margin:7px 0;font-size:15.5px;font-weight:500}
+.foot li a:hover{text-decoration:underline;text-underline-offset:4px}
+.foot .about{font-size:16px;max-width:30ch;margin-top:14px;font-weight:500}
+.legal{margin-top:54px;padding-top:22px;border-top:1.5px solid rgba(36,19,10,.25);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:14px;font-weight:500}
+.legal strong{font-weight:800}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--ink);color:#F6E3CF;padding:14px 20px;border-radius:14px;font-size:15px;font-weight:500;z-index:60;transition:transform .45s var(--ease);max-width:calc(100vw - 32px);display:flex;gap:12px;align-items:center;box-shadow:0 18px 30px -16px rgba(0,0,0,.6)}
+.toast.show{transform:translate(-50%,0)}
+.toast b{background:var(--roast);color:var(--ink);font-size:11px;padding:2px 7px;border-radius:5px;letter-spacing:.06em}
+
+/* odsłanianie */
+.rv{opacity:1;transform:none}
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+
+@media (max-width:1080px){
+  .menu{display:none}
+  .hero-grid{grid-template-columns:minmax(0,1fr);gap:34px}
+  .hero .lead{max-width:44ch}
+  .picks-row{grid-template-columns:minmax(0,1fr)}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .finder{grid-template-columns:minmax(0,1fr)}
+  .rec-grid{grid-template-columns:1fr 1fr}
+  .stages{grid-template-columns:repeat(2,1fr)}
+  .promo-in,.news-in{grid-template-columns:1fr}
+  .receipt{margin:0 auto}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .demo .wrap{flex-direction:column;gap:6px;font-size:13px}
+  .nav{gap:12px;height:68px}
+  .hsearch{display:none}
+  .brand{font-size:23px}
+  .hero{padding-top:24px}
+  .textlink{display:inline-block;margin:16px 0 0}
+  .scale{padding:18px 14px 20px;border-radius:26px 26px 0 0}
+  .lcd{padding:14px 14px 12px}
+  .lcd-row .lcdtxt{font-size:19px}
+  .lcd-main .unit{font-size:24px;padding-bottom:6px}
+  .lcd-main .num{font-size:clamp(54px,19vw,80px)}
+  .lcd-step{font-size:11px}
+  .scale-top{font-size:11px}
+  .hero h1{font-size:clamp(50px,15vw,72px)}
+  .lead{font-size:18px!important}
+  .picks-head h2{font-size:24px}
+  .card .price{font-size:19px}
+  .add{padding:9px 13px 9px 10px;font-size:13px}
+  .keys{gap:7px}
+  .key{font-size:12px;padding:10px 4px 9px}
+  .key svg{width:24px;height:24px}
+  .card{grid-template-columns:92px 1fr;gap:14px;padding:14px}
+  .badge{font-size:9.5px;padding:2px 6px;left:6px;top:6px}
+  .card h3{font-size:19px}
+  .shop-top,.log-top{flex-direction:column;align-items:flex-start;gap:16px}
+  .batch{text-align:left}
+  .finder{padding:20px 18px}
+  .finder-bar{flex-wrap:wrap}
+  .fsearch{flex-basis:100%}
+  .rec-grid{grid-template-columns:1fr}
+  .stages{grid-template-columns:1fr}
+  .promo-in{padding:34px 22px}
+  .receipt{width:100%;max-width:300px}
+  .news-in{padding:34px 22px}
+  .news form{flex-direction:column}
+  .foot{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: Strona główna to domowa waga do kawy – wybierasz metodę parzenia, wyświetlacz pokazuje gramy, proporcję i czas, a pod wagą od razu stoją kawy pod tę metodę. Odrzuca układ kategorii: kremowe tło + hasło + siatka torebek.
+OWN-WORLD: Pomarańczowe pole z logo (#D77B33) na całą szerokość hero, nagłówka i stopki; obudowa wagi w espresso #422212 z fizycznymi klawiszami; szałwiowy LCD #C9D3B4 z cyframi siedmiosegmentowymi i „duchami” 8.8.8; karty kawy jak etykiety na blacie #F1E7DA z identycznymi skalami segmentowymi; paragon z wagi jako kupon. Krój: Bricolage Grotesque + DSEG7/14 tylko do pomiarów.
+STORY: Domowy kawosz widzi, że Kavvusia to palarnia, która mówi mu ile i czego zaparzyć; wybiera metodę, dostaje przepis i 3 kawy, przechodzi do sklepu z filtrami „Dobierz kawę” i dodaje do koszyka – wiedząc, że to sklep demonstracyjny.
+FIRST VIEWPORT: Pasek „SKLEP DEMONSTRACYJNY”; pomarańczowy nagłówek z wyszukiwarką; po lewej „Ile kawy? Zważymy.” + CTA „Zobacz kawy pod V60”; po prawej waga na ~55% szerokości: LCD 15.0 g, 1:16, 02:45, 93°C, cztery klawisze metod i START/TARA; pod nią na blacie wiersz 3 kaw.
+FORM: Waga i minutnik baristy, pozycja 4 z mojej listy, seed 47459e0b.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<script>document.documentElement.classList.add('js')</script>
+
+<div class="demo" role="note">
+  <div class="wrap"><b>SKLEP DEMONSTRACYJNY</b><span>Kavvusia to projekt studencki. Produkty są fikcyjne, zamówienia nie są realizowane, a płatności nie są pobierane.</span></div>
+</div>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Kavvusia – strona główna"><img src="ikona.png" alt="">Kavvusia</a>
+    <nav class="menu" aria-label="Główna">
+      <a href="#sklep">Kawy</a><a href="#sklep" data-method="all">Dobierz kawę</a><a href="#palarnia">Palarnia</a><a href="#poradniki">Poradniki</a><a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="tools">
+      <label class="hsearch"><span class="vh">Szukaj kawy</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#24130A" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <input id="hq" type="search" placeholder="Szukaj: czekolada, Kenia…" autocomplete="off">
+      </label>
+      <a class="ibtn" href="#kontakt" aria-label="Konto"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.4-3.6 4.3-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg></a>
+      <button class="ibtn" aria-label="Koszyk"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 8h14l-1.3 12H6.3z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg><span class="cartn" id="cartn">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 id="h1">Ile kawy?<span>Zważymy.</span></h1>
+      <p class="lead">Mała palarnia dla tych, co parzą w domu. Wybierz, czym parzysz – powiemy, ile kawy, ile wody i którą wziąć.</p>
+      <a class="cta" href="#sklep" id="cta">Zobacz kawy pod <span id="ctaM">V60</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="textlink" href="#palarnia">Jak palimy</a>
+    </div>
+
+    <div class="scale-wrap">
+      <div class="scale" role="group" aria-label="Waga Kavvusia – przepis dla wybranej metody">
+        <div class="scale-top"><span class="model"><img src="ikona.png" alt="">KAVVUSIA · WAGA DOMOWA</span><span id="mname">PRZELEW V60</span></div>
+        <div class="lcd" aria-live="polite">
+          <div class="lcd-step"><span id="step">GOTOWA</span><span class="dim" id="grind">MIELENIE SREDNIE</span></div>
+          <div class="lcd-main">
+            <div class="num lcdtxt"><span class="ghost" aria-hidden="true">88.8</span><span class="val" id="dose">15.0</span></div>
+            <span class="unit">g</span>
+          </div>
+          <div class="lcd-row">
+            <div><small>Proporcja</small><span class="lcdtxt"><i aria-hidden="true">8:88</i><span id="ratio">1:16</span></span></div>
+            <div><small>Czas</small><span class="lcdtxt"><i aria-hidden="true">88:88</i><span id="time">02:45</span></span></div>
+            <div><small>Woda</small><span class="lcdtxt"><i aria-hidden="true">888</i><span id="water">240</span></span></div>
+          </div>
+        </div>
+        <div class="keys" role="group" aria-label="Metoda parzenia">
+          <button class="key" data-m="przelew" aria-pressed="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 8h20l-7 11h-6z"/><path d="M13 19v3h6v-3"/><path d="M8 26h16"/></svg>Przelew</button>
+          <button class="key" data-m="kawiarka" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M10 5h12l-2 10H12z"/><path d="M12 15h8l2 12H10z"/><path d="M22 8h3v5"/></svg>Kawiarka</button>
+          <button class="key" data-m="espresso" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 13h14v5a7 7 0 0 1-14 0z"/><path d="M22 14h2.5a2.5 2.5 0 0 1 0 5H22"/><path d="M12 5v4M16 4v5"/><path d="M6 27h20"/></svg>Espresso</button>
+          <button class="key" data-m="french" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="13" height="18" rx="2"/><path d="M15.5 3v12M11 15h9"/><path d="M22 13h3v9h-3"/></svg>French press</button>
+        </div>
+        <div class="ctrl"><button id="tare">TARA</button><button class="start" id="start">START</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="picks" aria-labelledby="picksH">
+  <div class="wrap">
+    <div class="picks-head"><h2 id="picksH">Na wadze leżą kawy pod <em id="picksM">przelew</em></h2><a class="textlink" href="#sklep" id="allLink" style="margin:0">Wszystkie kawy</a></div>
+    <div class="picks-row" id="picks"></div>
+  </div>
+</section>
+
+<section class="shop" id="sklep" aria-labelledby="shopH">
+  <div class="wrap">
+    <div class="shop-top rv">
+      <div><h2 class="sec-h" id="shopH">Dobierz kawę do siebie</h2><p class="sec-p">Zaznacz, czym parzysz i co lubisz. Lista zawęża się od razu.</p></div>
+    </div>
+    <div class="finder rv" role="search">
+      <div><h3>Czym parzysz</h3><div class="seg" data-f="method">
+        <button data-v="all" aria-pressed="true">Wszystko</button><button data-v="przelew" aria-pressed="false">Przelew</button><button data-v="kawiarka" aria-pressed="false">Kawiarka</button><button data-v="espresso" aria-pressed="false">Espresso</button><button data-v="french" aria-pressed="false">French press</button></div></div>
+      <div><h3>Stopień palenia</h3><div class="seg" data-f="roast">
+        <button data-v="all" aria-pressed="true">Każdy</button><button data-v="jasne" aria-pressed="false">Jasne</button><button data-v="srednie" aria-pressed="false">Średnie</button><button data-v="ciemne" aria-pressed="false">Ciemne</button></div></div>
+      <div><h3>Co lubisz w smaku</h3><div class="seg" data-f="taste" data-multi>
+        <button data-v="Owocowe" aria-pressed="false">Owocowe</button><button data-v="Czekoladowe" aria-pressed="false">Czekoladowe</button><button data-v="Orzechowe" aria-pressed="false">Orzechowe</button><button data-v="Kwiatowe" aria-pressed="false">Kwiatowe</button></div></div>
+      <div class="finder-bar">
+        <label class="fsearch"><span class="vh">Szukaj w kawach</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A98F" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <input id="q" type="search" placeholder="Nazwa, kraj albo nuta, np. „karmel”" autocomplete="off"></label>
+        <span class="count" aria-live="polite"><b id="cnt">8</b>z 8 kaw</span>
+        <button class="clear" id="clear">Wyczyść</button>
+      </div>
+      <p class="plug">Ten moduł to <strong>nasza wtyczka WordPress „Kavvusia Finder”</strong> – filtruje produkty WooCommerce po metodzie, paleniu i nutach smakowych.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="promo" aria-labelledby="promoH">
+  <div class="wrap">
+    <div class="promo-in rv">
+      <div><h2 id="promoH">Pierwsza paczka 10% taniej.</h2><p>Wpisz kod w koszyku. Działa na wszystkie kawy, raz na konto – to zwykły kupon WooCommerce, tyle że wydrukowany przez naszą wagę.</p></div>
+      <div class="receipt" aria-label="Paragon z kodem rabatowym">
+        <div class="r-h">KAVVUSIA</div><div class="r-s">palarnia · paragon niefiskalny</div>
+        <div class="rl"><span>Kawa ziarnista 250 g</span><span>49,00</span></div>
+        <div class="rl"><span>Rabat na start</span><span>−4,90</span></div>
+        <div class="dash"></div>
+        <div class="rl" style="font-weight:800"><span>RAZEM</span><span>44,10 zł</span></div>
+        <div class="dash"></div>
+        <button class="code" id="code" aria-label="Skopiuj kod KAVVUSIA10">KAVVUSIA10</button>
+        <p class="tiny">Kliknij, żeby skopiować.<br>Sklep demonstracyjny – kod nic nie kosztuje i nic nie kupuje.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="log" id="palarnia" aria-labelledby="logH">
+  <div class="wrap">
+    <div class="log-top rv">
+      <div><h2 class="sec-h" id="logH">Palimy w piątek. Wysyłamy w poniedziałek.</h2><p class="sec-p">Każda partia ma swój dziennik palenia. Tak wyglądało ostatnie 10 minut Kolumbii Huila.</p></div>
+      <p class="batch"><b>Partia #47 · Kolumbia Huila</b><br>piątek, 20 listopada · 5 kg zielonej kawy<br><span style="opacity:.7">dane przykładowe</span></p>
+    </div>
+    <div class="curve rv" id="curve">
+      <svg viewBox="0 0 1000 300" role="img" aria-label="Krzywa palenia: temperatura ziarna od 0 do 10 minut 30 sekund">
+        <g stroke="rgba(241,220,198,.09)" stroke-width="1">
+          <path d="M0 60H1000M0 120H1000M0 180H1000M0 240H1000"/>
+          <path d="M95 0V280M286 0V280M476 0V280M667 0V280M857 0V280"/>
+        </g>
+        <g fill="#9c7c64" font-size="13" font-family="Bricolage Grotesque" font-weight="600">
+          <text x="4" y="54">220°C</text><text x="4" y="174">160°C</text><text x="4" y="276">100°C</text>
+          <text x="90" y="298">2:00</text><text x="281" y="298">4:00</text><text x="471" y="298">6:00</text><text x="662" y="298">8:00</text><text x="852" y="298">10:00</text>
+        </g>
+        <path class="path" d="M0 40 C 30 210, 60 262, 110 262 S 230 210, 330 168 S 560 100, 700 78 S 900 52, 1000 46" fill="none" stroke="#D77B33" stroke-width="4" stroke-linecap="round"/>
+        <g class="mk" font-family="Bricolage Grotesque" font-size="14" font-weight="700">
+          <circle cx="0" cy="40" r="7" fill="#C9D3B4"/>
+          <circle cx="110" cy="262" r="7" fill="#C9D3B4"/><text x="124" y="258" fill="#F1DCC6">punkt zwrotny</text>
+          <circle cx="430" cy="140" r="7" fill="#C9D3B4"/><text x="444" y="162" fill="#F1DCC6">koniec suszenia</text>
+          <circle cx="835" cy="58" r="9" fill="#D77B33" stroke="#2f170a" stroke-width="3"/><text x="740" y="34" fill="#F6B07A">pierwszy trzask</text>
+          <circle cx="1000" cy="46" r="7" fill="#C9D3B4"/>
+        </g>
+      </svg>
+      <div class="stages">
+        <div class="stage"><span class="t">0:00</span><h4>Załadunek</h4><p>Zielone ziarno wpada do bębnu nagrzanego do 220°C.</p></div>
+        <div class="stage"><span class="t">1:10</span><h4>Punkt zwrotny</h4><p>Zimne ziarno najpierw schładza bęben, potem zaczyna się grzać.</p></div>
+        <div class="stage"><span class="t">4:30</span><h4>Suszenie</h4><p>Ziarno żółknie i pachnie jak świeży chleb.</p></div>
+        <div class="stage"><span class="t">8:45</span><h4>Pierwszy trzask</h4><p>Ziarno pęka jak popcorn – od tej chwili liczy się każda sekunda.</p></div>
+        <div class="stage"><span class="t">10:30</span><h4>Zrzut i studzenie</h4><p>Wysypujemy na sito i studzimy w 4 minuty, żeby zatrzymać smak.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recipes" id="poradniki" aria-labelledby="recH">
+  <div class="wrap">
+    <div class="rv"><h2 class="sec-h" id="recH">Przepisy z naszej wagi</h2><p class="sec-p">Krótkie poradniki, które da się zrobić przed pierwszym mailem w pracy.</p></div>
+    <div class="rec-grid">
+      <a class="rec rv" href="#poradniki"><div class="read"><div><small>Kawa</small><span class="lcdtxt">15.0</span></div><div><small>Woda</small><span class="lcdtxt">240</span></div><div><small>Czas</small><span class="lcdtxt">02:45</span></div></div>
+        <div class="body"><span class="kind">Przelew · 5 min czytania</span><h3>V60 bez stresu: trzy zalania i gotowe</h3><p>Ile zmielić, jak lać i co zrobić, gdy wychodzi kwaśno albo gorzko.</p><span class="more">Czytaj przepis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="rec rv" href="#poradniki"><div class="read"><div><small>Kawa</small><span class="lcdtxt">18.0</span></div><div><small>Woda</small><span class="lcdtxt">180</span></div><div><small>Czas</small><span class="lcdtxt">04:00</span></div></div>
+        <div class="body"><span class="kind">Kawiarka · 4 min czytania</span><h3>Kawiarka jak u babci, tylko bez przypalenia</h3><p>Gorąca woda na start, mały ogień i zdjęcie z palnika w dobrym momencie.</p><span class="more">Czytaj przepis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="rec rv" href="#poradniki"><div class="read"><div><small>Kawa</small><span class="lcdtxt">30.0</span></div><div><small>Woda</small><span class="lcdtxt">500</span></div><div><small>Czas</small><span class="lcdtxt">04:00</span></div></div>
+        <div class="body"><span class="kind">French press · 3 min czytania</span><h3>French press dla leniwych: 4 minuty i tłok</h3><p>Najprostsza metoda na dzbanek kawy dla całej rodziny.</p><span class="more">Czytaj przepis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="news" id="kontakt" aria-labelledby="newsH">
+  <div class="wrap">
+    <div class="news-in rv">
+      <div><h2 id="newsH">Daj znać, gdy coś nowego wyjdzie z bębna.</h2><p>Raz w tygodniu: nowe palenia, jeden przepis i czasem kod rabatowy.</p></div>
+      <div><form id="nf"><label class="vh" for="em">Twój e-mail</label><input id="em" type="email" placeholder="twoj@email.pl" required><button>Zapisz mnie</button></form><p class="fine">Formularz demonstracyjny – nic nie wysyłamy i nigdzie nie zapisujemy.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="brand" href="#top"><img src="ikona.png" alt="">Kavvusia</a><p class="about">Mała palarnia kawy dla domowych kawoszy. Bez snobizmu, za to z wagą.</p></div>
+      <div><h4>Sklep</h4><ul><li><a href="#sklep">Kawy do przelewu</a></li><li><a href="#sklep">Kawy do espresso</a></li><li><a href="#sklep">Kawy do kawiarki</a></li><li><a href="#sklep">Bezkofeinowe</a></li></ul></div>
+      <div><h4>Informacje</h4><ul><li><a href="#">Regulamin</a></li><li><a href="#">Polityka prywatności</a></li><li><a href="#">Dostawa i zwroty</a></li><li><a href="#poradniki">Poradniki</a></li></ul></div>
+      <div><h4>Kontakt</h4><ul><li>kontakt@kavvusia.pl</li><li>ul. Przykładowa 1, Warszawa</li><li>pn–pt 9:00–17:00</li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Kavvusia · projekt zaliczeniowy „Zarządzanie Treścią (CMS)”, PJATK</span><span><strong>Sklep demonstracyjny.</strong> Nie prowadzimy sprzedaży, a dane kontaktowe są fikcyjne.</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"><b>DEMO</b><span id="toastT"></span></div>
+
+<script>
+const M={
+  przelew:{name:'PRZELEW V60',label:'przelew',cta:'V60',dose:15.0,ratio:'1:16',time:165,water:240,grind:'MIELENIE SREDNIE',steps:[[0,'PREINFUZJA'],[30,'ZALEWANIE 1'],[75,'ZALEWANIE 2'],[120,'SPLYW'],[165,'GOTOWE']]},
+  kawiarka:{name:'KAWIARKA',label:'kawiarkę',cta:'kawiarkę',dose:18.0,ratio:'1:10',time:240,water:180,grind:'MIELENIE DROBNE',steps:[[0,'MALY OGIEN'],[150,'PIERWSZE KROPLE'],[210,'ZDEJMIJ'],[240,'GOTOWE']]},
+  espresso:{name:'ESPRESSO',label:'espresso',cta:'espresso',dose:18.0,ratio:'1:2',time:28,water:36,grind:'MIELENIE B. DROBNE',steps:[[0,'PREINFUZJA'],[6,'EKSTRAKCJA'],[28,'GOTOWE']]},
+  french:{name:'FRENCH PRESS',label:'french press',cta:'french press',dose:30.0,ratio:'1:16',time:240,water:500,grind:'MIELENIE GRUBE',steps:[[0,'ZALEJ'],[30,'MIESZAJ'],[60,'CZEKAJ'],[240,'WCISNIJ TLOK']]}
+};
+const P=[
+ {n:'Etiopia Yirgacheffe',o:'Etiopia',pr:'myta',b:'Sezonowa',c:'#F2C46D',roast:1,acid:5,sweet:3,body:2,notes:['jaśmin','bergamotka','cytryna'],m:['przelew','french'],t:['Kwiatowe','Owocowe'],p:54},
+ {n:'Kolumbia Huila',o:'Kolumbia',pr:'myta',b:'Świeża partia',c:'#E59A5B',roast:3,acid:3,sweet:4,body:3,notes:['karmel','czerwone jabłko','kakao'],m:['przelew','espresso','kawiarka'],t:['Owocowe','Czekoladowe'],p:49},
+ {n:'Brazylia Santos',o:'Brazylia',pr:'naturalna',c:'#C98652',roast:4,acid:1,sweet:4,body:4,notes:['orzech laskowy','mleczna czekolada','toffi'],m:['espresso','kawiarka','french'],t:['Orzechowe','Czekoladowe'],p:42},
+ {n:'Kenia Nyeri AA',o:'Kenia',pr:'myta',b:'Nowość',c:'#E7867A',roast:1,acid:5,sweet:3,body:3,notes:['czarna porzeczka','grejpfrut','rabarbar'],m:['przelew'],t:['Owocowe'],p:59},
+ {n:'Gwatemala Antigua',o:'Gwatemala',pr:'myta',c:'#B9774C',roast:3,acid:2,sweet:4,body:4,notes:['kakao','cynamon','brązowy cukier'],m:['kawiarka','french','espresso'],t:['Czekoladowe'],p:47},
+ {n:'Kavvusia Poranna',o:'Mieszanka',pr:'Brazylia + Kolumbia',b:'Mieszanka domu',c:'#8C5432',roast:5,acid:1,sweet:3,body:5,notes:['gorzka czekolada','karmel','prażony orzech'],m:['espresso','kawiarka'],t:['Czekoladowe','Orzechowe'],p:44},
+ {n:'Rwanda Nyamasheke',o:'Rwanda',pr:'naturalna',c:'#E89BA0',roast:2,acid:4,sweet:4,body:2,notes:['hibiskus','malina','herbata'],m:['przelew','french'],t:['Kwiatowe','Owocowe'],p:56},
+ {n:'Kolumbia bez kofeiny',o:'Kolumbia',pr:'dekofeinizacja EA',b:'Bezkofeinowa',c:'#A9B88C',roast:3,acid:2,sweet:4,body:3,notes:['mleczna czekolada','wanilia','orzech'],m:['przelew','espresso','kawiarka','french'],t:['Czekoladowe','Orzechowe'],p:46}
+];
+const roastName=r=>r<=2?'jasne':r===3?'srednie':'ciemne';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const bag=(c,roast)=>`<svg viewBox="0 0 100 130" aria-hidden="true"><path d="M18 20 L82 20 L88 124 L12 124 Z" fill="#D6B58F"/><path d="M16 8h68l-2 12H18z" fill="#C4A077"/><path d="M22 14h56" stroke="#9C7B55" stroke-width="2" stroke-dasharray="3 3"/><rect x="24" y="44" width="52" height="58" rx="6" fill="${c}"/><rect x="38" y="52" width="24" height="24" rx="7" fill="#422212"/><path d="M46 57c-2 3 2 4 0 7M53 57c-2 3 2 4 0 7" stroke="#D77B33" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M42 67h16v1.5a8 8 0 0 1-16 0z" fill="#FBF6EF"/>${[0,1,2,3,4].map(i=>`<rect x="${30+i*8.5}" y="86" width="6" height="7" rx="1.2" fill="${i<roast?'#422212':'rgba(66,34,18,.2)'}"/>`).join('')}<circle cx="50" cy="32" r="4" fill="#9C7B55"/></svg>`;
+const meters=x=>`<dl class="meters">${[['Palenie',x.roast,'roastm'],['Kwasowość',x.acid],['Słodycz',x.sweet],['Body',x.body]].map(([l,v,cl])=>`<dt>${l}</dt><dd class="${cl||''}" aria-label="${l} ${v} na 5">${[1,2,3,4,5].map(i=>`<i class="${i<=v?'on':''}"></i>`).join('')}</dd>`).join('')}</dl>`;
+const card=x=>`<article class="card"><div class="bag" style="background:${x.c}33">${x.b?`<span class="badge">${x.b}</span>`:''}${bag(x.c,x.roast)}</div>
+  <div class="info"><span class="meta">${x.o} · ${x.pr}</span><h3>${x.n}</h3><p class="notes">${x.notes.map(n=>`<span>${n}</span>`).join('')}</p>${meters(x)}
+  <div class="buy"><span class="price">${x.p} zł <small>/ 250 g</small></span><button class="add" data-n="${x.n}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Do koszyka</button></div></div></article>`;
+
+/* ── waga ── */
+let cur='przelew', timer=null, t0=0;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function rollTo(el,to,dec){ if(reduce){el.textContent=to.toFixed(dec);return}
+  const st=performance.now(),d=650; (function f(n){const k=Math.min(1,(n-st)/d),e=1-Math.pow(2,-10*k);el.textContent=(to*e).toFixed(dec);if(k<1)requestAnimationFrame(f)})(st)}
+function setMethod(m){
+  stopTimer(); cur=m; const r=M[m];
+  $$('.key').forEach(k=>k.setAttribute('aria-pressed',k.dataset.m===m));
+  $('#mname').textContent=r.name; $('#grind').textContent=r.grind; $('#step').textContent='GOTOWA';
+  rollTo($('#dose'),r.dose,1); $('#ratio').textContent=r.ratio; $('#time').textContent=fmt(r.time); rollTo($('#water'),r.water,0);
+  $('#ctaM').textContent=r.cta; $('#picksM').textContent=r.label;
+  const list=P.filter(x=>x.m.includes(m)).sort((a,b)=>b.m.indexOf(m)===a.m.indexOf(m)?b.sweet-a.sweet:a.m.indexOf(m)-b.m.indexOf(m)).slice(0,3);
+  const row=$('#picks'); row.style.opacity=0;
+  setTimeout(()=>{row.innerHTML=list.map(card).join('');row.style.opacity=1},reduce?0:180);
+}
+function stopTimer(){clearInterval(timer);timer=null;$('#start').textContent='START';$('#start').classList.remove('running')}
+$('#start').onclick=()=>{
+  if(timer){stopTimer();return}
+  const r=M[cur]; let s=0; $('#start').textContent='STOP'; $('#start').classList.add('running');
+  const tick=()=>{ $('#time').textContent=fmt(s); const st=[...r.steps].reverse().find(x=>s>=x[0]); $('#step').textContent=st[1];
+    if(s>=r.time){stopTimer();$('#step').textContent='GOTOWE';$('#time').textContent=fmt(r.time);return} s+= (r.time>60?5:1); };
+  tick(); timer=setInterval(tick, r.time>60?160:220);
+};
+$('#tare').onclick=()=>{stopTimer();$('#dose').textContent='0.0';$('#step').textContent='TARA';setTimeout(()=>setMethod(cur),700)};
+$$('.key').forEach(k=>k.onclick=()=>setMethod(k.dataset.m));
+$('#cta').onclick=()=>{setFilter('method',cur)};
+
+/* ── sklep / finder ── */
+const F={method:'all',roast:'all',taste:new Set(),q:''};
+function setFilter(k,v){F[k]=v;$$(`.seg[data-f="${k}"] button`).forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));render()}
+$$('.seg').forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=g.dataset.f;
+  if(g.hasAttribute('data-multi')){const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);on?F.taste.add(b.dataset.v):F.taste.delete(b.dataset.v);render()}
+  else setFilter(k,b.dataset.v)}));
+function render(){
+  const q=F.q.trim().toLowerCase();
+  const list=P.filter(x=>(F.method==='all'||x.m.includes(F.method))&&(F.roast==='all'||roastName(x.roast)===F.roast)&&(!F.taste.size||x.t.some(t=>F.taste.has(t)))&&(!q||[x.n,x.o,x.pr,...x.notes,...x.t].join(' ').toLowerCase().includes(q)));
+  $('#cnt').textContent=list.length;
+  $('#grid').innerHTML=list.length?list.map(card).join(''):`<div class="empty"><span class="lcdtxt">-0-</span><p>Waga nic nie pokazuje – żadna kawa nie pasuje do tych filtrów.</p><button onclick="clearAll()">Wyczyść filtry</button></div>`;
+}
+function clearAll(){F.taste.clear();$$('.seg[data-multi] button').forEach(b=>b.setAttribute('aria-pressed','false'));F.q='';$('#q').value='';$('#hq').value='';setFilter('roast','all');setFilter('method','all')}
+$('#clear').onclick=clearAll;
+$('#q').addEventListener('input',e=>{F.q=e.target.value;$('#hq').value=e.target.value;render()});
+$('#hq').addEventListener('input',e=>{F.q=e.target.value;$('#q').value=e.target.value;render()});
+$('#hq').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('#sklep').scrollIntoView({behavior:reduce?'auto':'smooth'})}});
+$$('[data-method="all"]').forEach(a=>a.onclick=()=>setFilter('method','all'));
+
+/* ── koszyk, kupon, newsletter ── */
+let n=0;
+document.addEventListener('click',e=>{const b=e.target.closest('.add');if(!b)return;$('#cartn').textContent=++n;b.classList.add('done');b.lastChild.textContent='W koszyku';
+  setTimeout(()=>{b.classList.remove('done');b.lastChild.textContent='Do koszyka'},1800);toast(`„${b.dataset.n}” w koszyku. Zamówienia nie są realizowane.`)});
+$('#code').onclick=()=>{navigator.clipboard?.writeText('KAVVUSIA10').catch(()=>{});toast('Skopiowano kod KAVVUSIA10.')};
+$('#nf').onsubmit=e=>{e.preventDefault();toast('Dzięki! To formularz demonstracyjny – nic nie zapisaliśmy.');e.target.reset()};
+function toast(t){const el=$('#toast');$('#toastT').textContent=t;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2800)}
+
+/* ── odsłanianie + cień nagłówka ── */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+$$('.rv,#curve').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>$('header').classList.toggle('scrolled',scrollY>10),{passive:true});
+
+setMethod('przelew'); render();
+</script>
+</body>
+</html>

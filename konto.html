@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moje konto | Kavvusia</title>
+<meta name="description" content="Panel klienta.">
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="konto">
+<main>
+
+<section style="padding:10px 0 90px"><div class="wrap">
+ <nav class="crumbs" aria-label="Okruszki"><a href="index.html">Start</a><span>/</span>Moje konto</nav>
+ <div class="ph-grid" style="margin-bottom:30px"><div><h1 class="h1" style="font-size:clamp(44px,5.6vw,80px)">Cześć, Kawoszu!</h1><p class="sub">To widok zalogowanego klienta. W demo dane są przykładowe – nic nie zapisujemy.</p></div><div class="stage" style="max-width:300px"><svg class="blob" style="left:0;top:4%;width:70%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#B9D3C2" d="M56 14c44-16 110 4 128 50s-2 104-44 124-108 6-130-36S12 30 56 14z"/></svg><svg class="blob" style="right:0;bottom:2%;width:62%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#F3C86A" d="M24 70C26 24 92 0 140 16s60 80 36 124-84 60-126 36S22 116 24 70z"/></svg><img src="grafiki/web/konto.png" alt="Osoba z kubkiem kawy przy laptopie" onerror="this.style.visibility='hidden'"></div></div>
+ <div class="acc">
+  <div class="tabs" role="tablist" aria-label="Konto"><button role="tab" data-t="pulpit">Pulpit</button><button role="tab" data-t="zamowienia">Zamówienia</button><button role="tab" data-t="adresy">Adresy</button><button role="tab" data-t="dane">Dane konta</button><button class="u" id="logout" style="text-align:left;padding:10px 18px">Wyloguj</button></div>
+  <div>
+   <div role="tabpanel" id="t-pulpit"><h2 class="h3">Pulpit</h2><div class="dash"><div class="panel" id="last"></div><div class="panel peach"><h3>Twoja kawa</h3><p>Najczęściej zamawiasz <b>Kolumbię Huila</b> pod przelew.</p><a class="btn sm" href="produkt.html?id=kolumbia-huila" style="margin-top:14px">Zamów ponownie</a></div></div></div>
+   <div role="tabpanel" id="t-zamowienia" hidden></div>
+   <div role="tabpanel" id="t-adresy" hidden><h2 class="h3">Adresy</h2><div class="addr"><div class="panel"><h3>Do wysyłki</h3><p>Kawosz Demo<br>ul. Przykładowa 12/4<br>00-001 Warszawa</p><p style="margin-top:8px">Paczkomat: WAW123M</p><button class="u" style="margin-top:12px">Edytuj</button></div><div class="panel"><h3>Do faktury</h3><p>Nie dodano adresu do faktury.</p><button class="u" style="margin-top:12px">Dodaj</button></div></div></div>
+   <div role="tabpanel" id="t-dane" hidden><h2 class="h3">Dane konta</h2><form id="dform" class="panel" style="margin-top:16px"><div class="fgrid"><div class="field"><label for="d1">Imię</label><input id="d1" value="Kawosz"></div><div class="field"><label for="d2">Nazwisko</label><input id="d2" value="Demo"></div><div class="field full"><label for="d3">E-mail</label><input id="d3" type="email" value="kawosz@example.com"></div><div class="field full"><label for="d4">Nowe hasło</label><input id="d4" type="password" placeholder="zostaw puste, żeby nie zmieniać"></div></div><button class="btn" style="margin-top:20px">Zapisz zmiany</button></form></div>
+  </div>
+ </div>
+</div></section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

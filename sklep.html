@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sklep – kawy i akcesoria | Kavvusia</title>
+<meta name="description" content="Katalog kaw i akcesoriów: filtry po metodzie parzenia, paleniu, smaku i pochodzeniu.">
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="sklep">
+<main>
+
+<section style="padding:10px 0 90px"><div class="wrap">
+ <nav class="crumbs" aria-label="Okruszki"><a href="index.html">Start</a><span>/</span>Sklep</nav>
+ <h1 class="h1" style="font-size:clamp(44px,5.6vw,80px)">Sklep</h1>
+ <p class="sub">Świeżo palone kawy i kilka rzeczy, które pomagają je dobrze zaparzyć.</p>
+ <div class="shop-layout" style="margin-top:36px">
+  <aside class="filters" aria-label="Filtry">
+   <div><p class="f-h">Kategoria</p><div class="chips" data-f="kat"><button class="chip" data-v="all">Wszystko</button><button class="chip" data-v="kawa">Kawy</button><button class="chip" data-v="akcesoria">Akcesoria</button></div></div>
+   <div><p class="f-h">Czym parzysz</p><div class="chips" data-f="method"><button class="chip" data-v="all">Wszystko</button><button class="chip" data-v="przelew">Przelew</button><button class="chip" data-v="kawiarka">Kawiarka</button><button class="chip" data-v="espresso">Espresso</button><button class="chip" data-v="french">French press</button></div></div>
+   <div><p class="f-h">Stopień palenia</p><div class="chips" data-f="roast"><button class="chip" data-v="jasne" aria-pressed="false">Jasne</button><button class="chip" data-v="srednie" aria-pressed="false">Średnie</button><button class="chip" data-v="ciemne" aria-pressed="false">Ciemne</button></div></div>
+   <div><p class="f-h">Smak</p><div class="chips" data-f="taste"><button class="chip" data-v="Owocowe" aria-pressed="false">Owocowy</button><button class="chip" data-v="Czekoladowe" aria-pressed="false">Czekoladowy</button><button class="chip" data-v="Orzechowe" aria-pressed="false">Orzechowy</button><button class="chip" data-v="Kwiatowe" aria-pressed="false">Kwiatowy</button></div></div>
+   <div><p class="f-h">Pochodzenie</p><div id="f-country"></div></div>
+   <div class="range"><label class="f-h" for="max" style="display:block">Cena do</label><input type="range" id="max" min="20" max="250" step="5" value="250"><div><span>20 zł</span><span id="maxv">250 zł</span></div></div>
+   <button class="btn ghost sm" id="clear">Wyczyść filtry</button>
+  </aside>
+  <div>
+   <div class="toolbar">
+    <button class="btn ghost sm" id="ftoggle" aria-expanded="false">Filtry</button>
+    <label class="fsearch"><span class="vh">Szukaj w sklepie</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Nazwa, kraj albo nuta, np. karmel"></label>
+    <label class="vh" for="sort">Sortuj</label><select id="sort"><option value="polecane">Polecane</option><option value="cena-rosnaco">Cena: od najniższej</option><option value="cena-malejaco">Cena: od najwyższej</option><option value="nowosci">Najnowsze</option><option value="nazwa">Nazwa A–Z</option></select>
+    <span class="count" aria-live="polite"><span id="cnt">0</span> produktów</span>
+   </div>
+   <div class="pgrid" id="grid"></div>
+  </div>
+ </div>
+</div></section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

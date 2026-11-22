@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kavvusia – palarnia kawy dla domowych kawoszy</title>
+<meta name="description" content="Mała palarnia kawy speciality. Świeżo palona kawa do przelewu, kawiarki, espresso i french pressa.">
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="home">
+<main>
+
+<section class="page-hero" style="padding-bottom:80px"><div class="wrap"><div class="ph-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+ <div><h1 class="h1" style="font-size:clamp(54px,7.4vw,108px)">Dobra kawa.<br>Zero spiny.</h1>
+ <p class="sub" style="font-size:22px">Mała palarnia dla tych, co parzą w domu. Palimy w piątek, wysyłamy w poniedziałek, a w kubku ląduje u Ciebie w środę.</p>
+ <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:34px"><a class="btn" href="sklep.html">Do sklepu</a><a class="btn ghost" href="poradnik.html">Dopiero zaczynam</a></div></div>
+ <div class="stage" style="aspect-ratio:1/1;max-width:580px"><svg class="blob" style="left:0;top:4%;width:62%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#C3CC7B" d="M40 24c40-30 112-20 140 22s20 104-20 130-110 24-140-10S0 54 40 24z"/></svg><svg class="blob" style="right:0;top:22%;width:64%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#A08FCB" d="M56 14c44-16 110 4 128 50s-2 104-44 124-108 6-130-36S12 30 56 14z"/></svg><svg class="blob" style="left:14%;bottom:0;width:52%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#EC9F80" d="M24 70C26 24 92 0 140 16s60 80 36 124-84 60-126 36S22 116 24 70z"/></svg><img src="grafiki/web/hero.png" alt="Dłoń zalewa kawę w dripperze V60" style="width:88%;margin:6% auto 0"></div>
+</div></div></section>
+
+<section class="sec" style="padding-top:20px"><div class="wrap">
+ <h2 class="h2">Czym parzysz?</h2><p class="sub">Wybierz swój sprzęt – pokażemy kawy, które w nim smakują najlepiej.</p>
+ <div class="mgrid">
+  <a class="method" href="sklep.html?metoda=przelew"><div class="stage"><svg class="blob" style="inset:6% 4% 0 4%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#F3C86A" d="M40 24c40-30 112-20 140 22s20 104-20 130-110 24-140-10S0 54 40 24z"/></svg><img src="grafiki/web/hero.png" alt=""></div><h3>Przelew</h3><p>V60, Chemex, drip</p></a>
+  <a class="method" href="sklep.html?metoda=kawiarka"><div class="stage"><svg class="blob" style="inset:6% 4% 0 4%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#C3CC7B" d="M30 50C44 10 120-4 162 26s38 98 6 136-104 40-140 8S16 90 30 50z"/></svg><img src="grafiki/web/kawiarka.png" alt=""></div><h3>Kawiarka</h3><p>klasyk z gazówki</p></a>
+  <a class="method" href="sklep.html?metoda=espresso"><div class="stage"><svg class="blob" style="inset:6% 4% 0 4%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#A08FCB" d="M56 14c44-16 110 4 128 50s-2 104-44 124-108 6-130-36S12 30 56 14z"/></svg><img src="grafiki/web/espresso.png" alt=""></div><h3>Espresso</h3><p>ekspres kolbowy</p></a>
+  <a class="method" href="sklep.html?metoda=french"><div class="stage"><svg class="blob" style="inset:6% 4% 0 4%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#EC9F80" d="M24 70C26 24 92 0 140 16s60 80 36 124-84 60-126 36S22 116 24 70z"/></svg><img src="grafiki/web/french-press.png" alt=""></div><h3>French press</h3><p>dzbanek dla wszystkich</p></a>
+ </div>
+</div></section>
+
+<section class="sec white"><div class="wrap">
+ <div class="sec-head"><div><h2 class="h2">Najczęściej wybierane</h2><p class="sub">Kawy, do których wracacie najczęściej.</p></div><a class="btn ghost" href="sklep.html">Wszystkie kawy</a></div>
+ <div class="pgrid" id="featured"></div>
+</div></section>
+
+<section class="sec"><div class="wrap"><div class="ph-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px">
+ <div class="stage" style="aspect-ratio:1/1;max-width:none;justify-self:stretch"><svg class="blob" style="left:0;top:4%;width:70%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#F3C86A" d="M40 24c40-30 112-20 140 22s20 104-20 130-110 24-140-10S0 54 40 24z"/></svg><svg class="blob" style="right:0;bottom:2%;width:62%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#C3CC7B" d="M30 50C44 10 120-4 162 26s38 98 6 136-104 40-140 8S16 90 30 50z"/></svg><img src="grafiki/web/palarnia.png" alt="Palaczka przy bębnie, świeże ziarna wysypują się do studzenia" onerror="this.style.visibility='hidden'"></div>
+ <div><h2 class="h2">Palimy małymi partiami.</h2><p class="sub">Bęben na 5 kg, nos przy ziarnie i żadnego magazynu na pół roku. Data palenia jest na każdej torebce.</p><a class="btn" href="o-nas.html" style="margin-top:28px">Poznaj palarnię</a></div>
+</div></div></section>
+
+<section class="boxsec"><div class="wrap"><div class="boxstage">
+ <svg class="blob" style="left:-8%;top:30%;width:34%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#C3CC7B" d="M30 50C44 10 120-4 162 26s38 98 6 136-104 40-140 8S16 90 30 50z"/></svg><svg class="blob" style="right:-10%;top:44%;width:38%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#A08FCB" d="M56 14c44-16 110 4 128 50s-2 104-44 124-108 6-130-36S12 30 56 14z"/></svg>
+ <img class="peek" src="grafiki/web/ziarna.png" alt="">
+ <div class="box"><h2>Pierwszy raz z kawą speciality?</h2><p class="lead">Spokojnie. Nasz poradnik przeprowadzi Cię od „jaką kawę wybrać” do pierwszego dobrego kubka.</p><p class="small">5 kroków, zero żargonu. Do tego kod <b>KAVVUSIA10</b> na −10% na pierwszą paczkę.</p><a class="btn" href="poradnik.html">Czytam poradnik</a></div>
+</div></div></section>
+
+<section class="sec white"><div class="wrap">
+ <div class="sec-head"><div><h2 class="h2">Z bloga</h2><p class="sub">Przepisy, porady i trochę życia palarni.</p></div><a class="btn ghost" href="blog.html">Wszystkie wpisy</a></div>
+ <div class="bgrid" id="home-blog"></div>
+</div></section>
+<style>
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:44px}
+.method{text-align:center;padding:6px 6px 18px;transition:transform .25s;display:block}
+.method:hover{transform:translateY(-6px) rotate(-1.5deg)}
+.method .stage{aspect-ratio:1/1}.method .stage>img{width:84%;margin:8% auto 0}
+.method h3{font-size:30px;font-weight:800;margin-top:6px;letter-spacing:-.02em}.method p{font-size:16px}
+.boxsec{padding:100px 0 110px}
+.boxstage{position:relative;max-width:1000px;margin:0 auto;padding-top:270px}
+.peek{position:absolute;left:50%;top:0;transform:translateX(-50%);width:340px;z-index:3}
+.box{position:relative;z-index:2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' preserveAspectRatio='none'%3E%3Cpath fill='%23E2652F' d='M14 64C8 26 52 6 104 6s92 10 92 58c0 30-6 56 0 84 6 32-34 48-86 50S16 192 8 160c-6-28 12-56 6-96z'/%3E%3C/svg%3E") center/100% 100% no-repeat;padding:96px 120px 100px;text-align:center}
+.box h2{font:900 clamp(38px,4.8vw,62px)/1 'Gabarito';letter-spacing:-.03em}
+.box .lead{font-weight:700;margin:20px auto 0}.box .small{font-size:18px;max-width:60ch;margin:14px auto 28px}
+@media (max-width:1080px){.mgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.mgrid{gap:12px}.method h3{font-size:22px}.boxstage{padding-top:190px}.peek{width:240px}.box{padding:80px 34px 84px}}
+</style>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

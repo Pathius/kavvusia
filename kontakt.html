@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt | Kavvusia</title>
+<meta name="description" content="Napisz do nas – odpowiadamy w dni robocze.">
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="kontakt">
+<main>
+<section class="page-hero"><div class="wrap"><nav class="crumbs" aria-label="Okruszki"><a href="index.html">Start</a><span>/</span>Kontakt</nav><div class="ph-grid"><div><h1 class="h1">Napisz do nas</h1><p class="sub">Pytanie o kawę, zamówienie albo współpracę? Odpowiadamy w dni robocze, zwykle tego samego dnia.</p></div><div class="stage"><svg class="blob" style="left:0;top:4%;width:70%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#B9D3C2" d="M24 70C26 24 92 0 140 16s60 80 36 124-84 60-126 36S22 116 24 70z"/></svg><svg class="blob" style="right:0;bottom:2%;width:62%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#EC9F80" d="M40 24c40-30 112-20 140 22s20 104-20 130-110 24-140-10S0 54 40 24z"/></svg><img src="grafiki/web/kontakt.png" alt="Dziewczyna pisze wiadomość na telefonie" onerror="this.style.visibility='hidden'"></div></div></div></section>
+<section style="padding:0 0 90px"><div class="wrap"><div class="kgrid">
+ <div class="panel"><form id="kform" novalidate><div class="fgrid">
+  <div class="field"><label for="k1">Imię</label><input id="k1" autocomplete="given-name" required><span class="err">Jak masz na imię?</span></div>
+  <div class="field"><label for="k2">E-mail</label><input id="k2" type="email" autocomplete="email" required><span class="err">Podaj poprawny e-mail, żebyśmy mogli odpisać.</span></div>
+  <div class="field full"><label for="k3">Temat</label><select id="k3"><option>Pytanie o kawę</option><option>Moje zamówienie</option><option>Współpraca / hurt</option><option>Inne</option></select></div>
+  <div class="field full"><label for="k4">Numer zamówienia <small>(jeśli dotyczy)</small></label><input id="k4" placeholder="np. KV-10482"></div>
+  <div class="field full"><label for="k5">Wiadomość</label><textarea id="k5" required></textarea><span class="err">Napisz kilka słów.</span></div>
+  <div class="check full"><input type="checkbox" id="k6" required><label for="k6">Zgadzam się na przetwarzanie danych w celu odpowiedzi na wiadomość.</label></div>
+ </div><button class="btn" style="margin-top:22px">Wyślij wiadomość</button><p style="font-size:14px;margin-top:12px">Formularz demonstracyjny – wiadomość nigdzie nie trafi.</p></form>
+ <div id="ksent" hidden style="text-align:center;padding:30px 10px"><img src="grafiki/web/kubki.png" alt="" style="max-width:240px;margin:0 auto"><h2 class="h3" style="margin-top:10px">Dzięki, wiadomość „wysłana”!</h2><p>W prawdziwym sklepie odpisalibyśmy w ciągu dnia roboczego.</p></div></div>
+ <div><div class="panel peach"><h3>Dane kontaktowe</h3><p><b>E-mail:</b> kontakt@kavvusia.pl<br><b>Telefon:</b> +48 000 000 000<br><b>Palarnia:</b> ul. Przykładowa 1, Warszawa<br><b>Godziny:</b> pn–pt 9:00–17:00</p><p style="font-size:14px;margin-top:10px">Dane fikcyjne – sklep demonstracyjny.</p></div>
+ <div class="faq" style="margin-top:22px"><h3 class="h3" style="margin-bottom:12px">Częste pytania</h3>
+  <details><summary>Kiedy wyślecie moją kawę?</summary><p>Palimy w piątek, wysyłamy w poniedziałek. Zamówienia z weekendu jadą w kolejny poniedziałek.</p></details>
+  <details><summary>Ile kosztuje dostawa?</summary><p>Paczkomat 12,99 zł, kurier 16,99 zł. Od 99 zł – za darmo.</p></details>
+  <details><summary>Czy mogę zwrócić kawę?</summary><p>Kawę mieloną na zamówienie trudno zwrócić, ale jeśli coś jest nie tak – napisz, dogadamy się.</p></details>
+  <details><summary>Gdzie jest moje zamówienie?</summary><p>Sprawdź na stronie <a class="u" href="sledzenie.html">Śledź zamówienie</a>.</p></details>
+ </div></div>
+</div></div></section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

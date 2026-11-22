@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Śledź zamówienie | Kavvusia</title>
+<meta name="description" content="Sprawdź status zamówienia.">
+<link rel="icon" href="ikona.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="sledzenie">
+<main>
+<section class="page-hero"><div class="wrap"><nav class="crumbs" aria-label="Okruszki"><a href="index.html">Start</a><span>/</span>Śledź zamówienie</nav><div class="ph-grid"><div><h1 class="h1">Gdzie jest moja kawa?</h1><p class="sub">Wpisz numer zamówienia z maila – pokażemy, na jakim jest etapie: od bębna do Twoich drzwi.</p><form id="tform" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;max-width:520px" novalidate><div class="field" style="flex:1;min-width:220px"><label class="vh" for="tnr">Numer zamówienia</label><input id="tnr" placeholder="np. KV-10482" required><span class="err">Wpisz numer zamówienia.</span></div><button class="btn">Sprawdź</button></form><p style="margin-top:10px;font-size:15px">Demo: spróbuj <b>KV-10482</b> albo numeru z Twojego testowego zamówienia.</p></div><div class="stage"><svg class="blob" style="left:0;top:4%;width:70%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#A08FCB" d="M56 14c44-16 110 4 128 50s-2 104-44 124-108 6-130-36S12 30 56 14z"/></svg><svg class="blob" style="right:0;bottom:2%;width:62%" viewBox="0 0 200 200" aria-hidden="true"><path fill="#F3C86A" d="M24 70C26 24 92 0 140 16s60 80 36 124-84 60-126 36S22 116 24 70z"/></svg><img src="grafiki/web/w-drodze.png" alt="Kurier na rowerze wiezie paczkę z kawą" onerror="this.style.visibility='hidden'"></div></div></div></section><section style="padding:0 0 90px"><div class="wrap narrow" id="result"></div></section>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
